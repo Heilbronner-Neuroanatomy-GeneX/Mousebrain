@@ -1,0 +1,42 @@
+@author: emilykilen
+"""
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.colors import LogNorm
+import matplotlib.colors as colors
+from mpl_toolkits.mplot3d import Axes3D
+#25micron Volume
+
+def prod(nums):
+    return(nums[0]*nums[1]*nums[2])
+
+size = (67,41,58)
+#Download and unzip the gridAnnotation zip files
+ 
+#200 micron volume size
+
+#ANOGD = 3-D matrix of grid-level annotation labels
+with open('/Users/emilykilen/desktop/P56_Mouse_gridAnnotation/gridAnnotation.raw', 'r') as file:
+    GA = np.fromfile(file, dtype = np.dtype('<u4'))
+file.close()
+
+GA = np.reshape(GA, size, order='F')
+
+#Display one coronal and one sagittal section
+plt.figure(1)  
+plt.imshow(GA[40,:,:], cmap="gray");
+plt.colorbar()
+plt.show()
+plt.savefig('figure1.png');#colormap(lines);
+
+plt.figure(3)  
+plt.imshow(GA[:,:,30], cmap="gray");
+plt.colorbar()
+plt.show()
+plt.savefig('figure3.png')
+
+plt.figure(4)  
+plt.imshow(GA[:,2,:], cmap="gray");
+plt.colorbar()
+plt.show()
+plt.savefig('figure3.png')
