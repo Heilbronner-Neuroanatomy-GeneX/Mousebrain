@@ -1,0 +1,59 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Apr  6 14:56:55 2018
+
+@author: emilykilen
+"""
+from __future__ import division
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.colors import LogNorm
+import matplotlib.colors as colors
+from mpl_toolkits.mplot3d import Axes3D
+
+#25micron Volume
+
+def prod(nums):
+    return(nums[0]*nums[1]*nums[2])
+
+size = (67,41,58)
+#Download and unzip the gridAnnotation zip files
+ 
+#200 micron volume size
+
+#ANOGD = 3-D matrix of grid-level annotation labels
+with open('/Users/emilykilen/desktop/P56_Mouse_gridAnnotation/gridAnnotation.raw', 'r') as file:
+    GA = np.fromfile(file, dtype = np.dtype('<u4'))
+file.close()
+
+GA = np.reshape(GA, size, order='F')
+
+with open('/Users/emilykilen/desktop/Snap47Coronal/energy.raw', 'r') as file:
+    snap47 = np.fromfile(file, dtype = np.dtype('<u4'))
+file.close()
+
+snap47 = np.reshape(snap47, size, order='F')
+
+#Display one coronal and one sagittal section
+#plt.figure(1)  
+xmin = 0
+xmax = 55
+ymin = 0
+ymax = 39
+extent = xmin, xmax, ymin, ymax
+fig = plt.figure(frameon=False)
+im1 = plt.imshow(GA[22,:,:], cmap="gray",interpolation='nearest',extent=extent);
+#plt.colorbar()
+#plt.figure(2)  
+im2 = plt.imshow(snap47[22,:,:], cmap="Blues",alpha=.9, interpolation='bilinear',extent=extent);
+plt.colorbar()
+plt.show()
+#plt.savefig('figure1.png');#colormap(lines);
+
+
+#plt.figure(2)  
+#plt.imshow(snap47[15,:,:], cmap="Blues");
+#plt.colorbar()
+#plt.show()
+#plt.savefig('figure2.png');
